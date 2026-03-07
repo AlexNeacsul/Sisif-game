@@ -1,13 +1,20 @@
-[gd_scene load_steps=7 format=3 uid="uid://cx23pv2onjvsg"]
+[gd_scene load_steps=10 format=3 uid="uid://cx23pv2onjvsg"]
 
 [ext_resource type="PackedScene" uid="uid://x23yarpoegih" path="res://Scenes/sisif.tscn" id="1_ebmjs"]
 [ext_resource type="PackedScene" uid="uid://cqbf25fk5degr" path="res://Scenes/Map.tscn" id="1_wrm1d"]
 [ext_resource type="PackedScene" uid="uid://ca8kuv4lowufm" path="res://Scenes/Enemies.tscn" id="2_3dryh"]
 [ext_resource type="PackedScene" uid="uid://dnkjlnbcvw7ri" path="res://Scenes/spawn_point.tscn" id="3_wowpa"]
 [ext_resource type="PackedScene" uid="uid://bexittqohif2a" path="res://Scenes/rigid boulder.tscn" id="3_wrm1d"]
+[ext_resource type="Script" uid="uid://ciwwocicyi1a7" path="res://Scripts/progress_bar.gd" id="6_i6g32"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ebmjs"]
 distance = -70.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1l0tm"]
+bg_color = Color(0.652849, 0, 0.228242, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i6g32"]
+bg_color = Color(0, 0.690122, 0.661412, 1)
 
 [node name="Game" type="Node2D"]
 
@@ -15,7 +22,7 @@ distance = -70.0
 position = Vector2(52, 14)
 
 [node name="Enemies" parent="Map" instance=ExtResource("2_3dryh")]
-position = Vector2(-31, -19)
+position = Vector2(-51, -15)
 
 [node name="spawnPoint" parent="Map/Enemies" instance=ExtResource("3_wowpa")]
 position = Vector2(-66, -62)
@@ -24,6 +31,7 @@ position = Vector2(-66, -62)
 position = Vector2(215, -64)
 
 [node name="Sisif" parent="." instance=ExtResource("1_ebmjs")]
+unique_name_in_owner = true
 position = Vector2(1, 0)
 
 [node name="Camera2D" type="Camera2D" parent="Sisif"]
@@ -38,3 +46,17 @@ position = Vector2(-146, -83)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(-3, -3)
 shape = SubResource("WorldBoundaryShape2D_ebmjs")
+
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 13
+script = ExtResource("6_i6g32")
+
+[node name="ProgressBar" type="ProgressBar" parent="UI"]
+anchors_preset = -1
+offset_left = -11.0
+offset_top = -12.0
+offset_right = 100.0
+offset_bottom = 15.0
+theme_override_styles/background = SubResource("StyleBoxFlat_1l0tm")
+theme_override_styles/fill = SubResource("StyleBoxFlat_i6g32")
+show_percentage = false

@@ -4,7 +4,7 @@ extends CharacterBody2D
 @export var gravity: float = 980.0
 @export var walk_time: float = 2.0
 @export var idle_time: float = 1.5
-@export var hp: int = 100
+@export var damage: int = 20
 
 @onready var animatedSprite = $AnimatedSprite2D
 
@@ -60,3 +60,8 @@ func play_animation_helper(animName) -> void:
 		animatedSprite.play(animName)
 	else:
 		pass
+
+
+func _on_hitbox_body_entered(body: Node2D) -> void:
+	if body.is_in_group("Player"):
+		body.take_damage(damage)

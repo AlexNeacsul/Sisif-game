@@ -1,5 +1,10 @@
 extends CharacterBody2D
 
+signal health_changed(new_health)
+@export var max_health: int = 100
+var current_health: int = 100
+var is_invincible: bool = false
+
 @onready var boulder: CharacterBody2D = $"../boulder"
 @onready var animated_sprite: AnimatedSprite2D = $SisifSprite
 
@@ -7,6 +12,10 @@ extends CharacterBody2D
 @export var JUMP_VELOCITY: float = -400.0
 @export var PUSH_STRENGTH: float = 70.0
 var carrying_boulder = false
+
+func _ready() -> void:
+	current_health = max_health
+	add_to_group("Player")
 
 func get_carrying_boulder() -> bool:
 	return carrying_boulder
@@ -63,5 +72,30 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		
-
 	move_and_slide()
+
+func take_damage(amount: int):
+	if is_invincible:
+		return
+	
+	current_health -= amount
+	current_health = clamp(current_health, 0, max_health)
+	
+	health_changed.emit(current_health)
+	
+	if current_health <= 0:
+		die()
+	else:
+		become_invincible()
+		
+func become_invincible():
+	is_invincible = true
+	
+	animated_sprite.modulate.a = 0.5
+	await get_tree().create_timer(1.5).timeout
+	animated_sprite.modulate.a = 1.0
+	is_invincible = false
+	
+func die():
+	print("sisif e mort!")
+	get_tree().reload_current_scene()

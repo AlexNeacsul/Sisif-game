@@ -1,4 +1,4 @@
-[gd_scene load_steps=123 format=3 uid="uid://ca8kuv4lowufm"]
+[gd_scene load_steps=124 format=3 uid="uid://ca8kuv4lowufm"]
 
 [ext_resource type="Script" uid="uid://dm7yfcdt6gpcx" path="res://Scripts/enemies.gd" id="1_0w7fe"]
 [ext_resource type="Texture2D" uid="uid://bxdv0o8iuhjby" path="res://Assets/Sprites/Female Ghost skin.png" id="1_77025"]
@@ -201,6 +201,10 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_77025"]
+height = 34.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_i8ma0"]
+height = 38.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yriy7"]
 atlas = ExtResource("2_wl5hl")
@@ -436,6 +440,7 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_laue0"]
+height = 36.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hi3tw"]
 atlas = ExtResource("3_0w7fe")
@@ -847,6 +852,7 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_l41ky"]
+radius = 14.0
 height = 28.0
 
 [node name="Enemies" type="Node2D"]
@@ -860,16 +866,23 @@ script = ExtResource("1_0w7fe")
 script = ExtResource("2_i8ma0")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies_pool1/womanGhost/CharacterBody2D"]
-position = Vector2(0, -30)
+position = Vector2(-1, -33)
 sprite_frames = SubResource("SpriteFrames_k0tky")
-animation = &"run"
-frame_progress = 0.712498
+animation = &"dying"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies_pool1/womanGhost/CharacterBody2D"]
 position = Vector2(-1, -18)
 shape = SubResource("CapsuleShape2D_77025")
 
+[node name="Hitbox" type="Area2D" parent="Enemies_pool1/womanGhost/CharacterBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies_pool1/womanGhost/CharacterBody2D/Hitbox"]
+position = Vector2(-1, -20)
+shape = SubResource("CapsuleShape2D_i8ma0")
+debug_color = Color(0.919557, 0.219287, 0.456305, 0.42)
+
 [node name="maleDemon" type="Node2D" parent="Enemies_pool1"]
+visible = false
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="Enemies_pool1/maleDemon"]
 script = ExtResource("2_i8ma0")
@@ -885,6 +898,7 @@ position = Vector2(0, -18)
 shape = SubResource("CapsuleShape2D_laue0")
 
 [node name="redSlime" type="Node2D" parent="Enemies_pool1"]
+visible = false
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="Enemies_pool1/redSlime"]
 script = ExtResource("2_i8ma0")
@@ -903,17 +917,20 @@ rotation = -1.57079
 shape = SubResource("CapsuleShape2D_wqtcc")
 
 [node name="hellHound" type="Node2D" parent="Enemies_pool1"]
+visible = false
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="Enemies_pool1/hellHound"]
 position = Vector2(0, -1)
 script = ExtResource("2_i8ma0")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies_pool1/hellHound/CharacterBody2D"]
-position = Vector2(1, -22)
+position = Vector2(-2, -23)
 sprite_frames = SubResource("SpriteFrames_c73fr")
 animation = &"run"
 frame_progress = 0.0987033
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies_pool1/hellHound/CharacterBody2D"]
-position = Vector2(-1, -8)
+position = Vector2(-1, -13)
 shape = SubResource("CapsuleShape2D_l41ky")
+
+[connection signal="body_entered" from="Enemies_pool1/womanGhost/CharacterBody2D/Hitbox" to="Enemies_pool1/womanGhost/CharacterBody2D" method="_on_hitbox_body_entered"]
