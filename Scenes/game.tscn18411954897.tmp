@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://cx23pv2onjvsg"]
+
+[ext_resource type="PackedScene" uid="uid://x23yarpoegih" path="res://Scenes/sisif.tscn" id="1_ebmjs"]
+[ext_resource type="PackedScene" uid="uid://bexittqohif2a" path="res://Scenes/rigid boulder.tscn" id="3_wrm1d"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ebmjs"]
+distance = -7.0
+
+[node name="Game" type="Node2D"]
+
+[node name="Sisif" parent="." instance=ExtResource("1_ebmjs")]
+position = Vector2(1, 0)
+
+[node name="pin_joint" type="PinJoint2D" parent="Sisif"]
+node_a = NodePath("../../boulder")
+node_b = NodePath("..")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-1, -119)
+zoom = Vector2(2.5, 2.5)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("WorldBoundaryShape2D_ebmjs")
+
+[node name="boulder" parent="." instance=ExtResource("3_wrm1d")]
+position = Vector2(109, -82)

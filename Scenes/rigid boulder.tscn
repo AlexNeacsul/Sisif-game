@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://bexittqohif2a"]
+
+[ext_resource type="Texture2D" uid="uid://ctdgoeo3ewhch" path="res://Assets/Sprites/boulder.png" id="1_f25ie"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idkci"]
+atlas = ExtResource("1_f25ie")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mampk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idkci")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sop4i"]
+radius = 120.652
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f25ie"]
+radius = 26.0192
+
+[node name="RigidBody2D" type="RigidBody2D" groups=["Pushable"]]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
+sprite_frames = SubResource("SpriteFrames_mampk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.2, 0.2)
+shape = SubResource("CircleShape2D_sop4i")
+
+[node name="RangeOfAction" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RangeOfAction"]
+shape = SubResource("CircleShape2D_f25ie")
+debug_color = Color(0.964679, 4.81307e-07, 0.491303, 0.42)

@@ -1,0 +1,40 @@
+[gd_scene load_steps=7 format=3 uid="uid://cx23pv2onjvsg"]
+
+[ext_resource type="PackedScene" uid="uid://x23yarpoegih" path="res://Scenes/sisif.tscn" id="1_ebmjs"]
+[ext_resource type="PackedScene" uid="uid://cqbf25fk5degr" path="res://Scenes/Map.tscn" id="1_wrm1d"]
+[ext_resource type="PackedScene" uid="uid://ca8kuv4lowufm" path="res://Scenes/Enemies.tscn" id="2_3dryh"]
+[ext_resource type="PackedScene" uid="uid://dnkjlnbcvw7ri" path="res://Scenes/spawn_point.tscn" id="3_wowpa"]
+[ext_resource type="PackedScene" uid="uid://bexittqohif2a" path="res://Scenes/rigid boulder.tscn" id="3_wrm1d"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ebmjs"]
+distance = -70.0
+
+[node name="Game" type="Node2D"]
+
+[node name="Map" parent="." instance=ExtResource("1_wrm1d")]
+position = Vector2(52, 14)
+
+[node name="Enemies" parent="Map" instance=ExtResource("2_3dryh")]
+position = Vector2(-31, -19)
+
+[node name="spawnPoint" parent="Map/Enemies" instance=ExtResource("3_wowpa")]
+position = Vector2(-66, -62)
+
+[node name="spawnPoint2" parent="Map/Enemies" instance=ExtResource("3_wowpa")]
+position = Vector2(215, -64)
+
+[node name="Sisif" parent="." instance=ExtResource("1_ebmjs")]
+position = Vector2(1, 0)
+
+[node name="Camera2D" type="Camera2D" parent="Sisif"]
+position = Vector2(0, -21)
+zoom = Vector2(2.5, 2.5)
+
+[node name="RigidBody2D" parent="." instance=ExtResource("3_wrm1d")]
+position = Vector2(-146, -83)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-3, -3)
+shape = SubResource("WorldBoundaryShape2D_ebmjs")
