@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://x23yarpoegih"]
+[gd_scene load_steps=32 format=3 uid="uid://x23yarpoegih"]
 
 [ext_resource type="Texture2D" uid="uid://bp58ncaiyl6h4" path="res://Assets/Sprites/Male Skin3.PNG" id="1_secfd"]
 [ext_resource type="Script" uid="uid://deqt8hybyik1e" path="res://Scripts/sisif.gd" id="1_xcyfn"]
@@ -75,6 +75,30 @@ region = Rect2(240, 128, 80, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_bwly6"]
 atlas = ExtResource("1_secfd")
 region = Rect2(160, 128, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rwpwc"]
+atlas = ExtResource("1_secfd")
+region = Rect2(480, 320, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v57i8"]
+atlas = ExtResource("1_secfd")
+region = Rect2(560, 320, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o7pwl"]
+atlas = ExtResource("1_secfd")
+region = Rect2(640, 320, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x68xp"]
+atlas = ExtResource("1_secfd")
+region = Rect2(400, 320, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vs1lq"]
+atlas = ExtResource("1_secfd")
+region = Rect2(320, 320, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hgnnu"]
+atlas = ExtResource("1_secfd")
+region = Rect2(720, 320, 80, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uqmwf"]
 atlas = ExtResource("1_secfd")
@@ -162,6 +186,29 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_rwpwc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v57i8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o7pwl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x68xp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vs1lq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hgnnu")
+}],
+"loop": true,
+"name": &"attacking",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_uqmwf")
 }, {
 "duration": 1.0,
@@ -184,8 +231,8 @@ metadata/Health = 0
 [node name="SisifSprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(-1, -32)
 sprite_frames = SubResource("SpriteFrames_8rw3v")
-animation = &"Idle"
-frame_progress = 0.002864
+animation = &"attacking"
+frame_progress = 0.981717
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, -22)
