@@ -1,8 +1,8 @@
-[gd_scene load_steps=124 format=3 uid="uid://ca8kuv4lowufm"]
+[gd_scene load_steps=126 format=3 uid="uid://ca8kuv4lowufm"]
 
-[ext_resource type="Script" uid="uid://dm7yfcdt6gpcx" path="res://Scripts/enemies.gd" id="1_0w7fe"]
+[ext_resource type="Script" path="res://Scripts/enemies.gd" id="1_0w7fe"]
 [ext_resource type="Texture2D" uid="uid://bxdv0o8iuhjby" path="res://Assets/Sprites/Female Ghost skin.png" id="1_77025"]
-[ext_resource type="Script" uid="uid://lntb83whb8p0" path="res://Scripts/genericEnemy.gd" id="2_i8ma0"]
+[ext_resource type="Script" path="res://Scripts/genericEnemy.gd" id="2_i8ma0"]
 [ext_resource type="Texture2D" uid="uid://cgskqms3blayk" path="res://Assets/Sprites/Male Demon skin.png" id="2_wl5hl"]
 [ext_resource type="Texture2D" uid="uid://cn1l5ko22o7p0" path="res://Assets/Sprites/Slime red.png" id="3_0w7fe"]
 [ext_resource type="Texture2D" uid="uid://cgauq7jb4a6on" path="res://Assets/Sprites/hell-hound-idle.png" id="4_i8ma0"]
@@ -128,7 +128,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"attacking",
-"speed": 11.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -201,10 +201,19 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_77025"]
-height = 34.0
+height = 42.0
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_i8ma0"]
-height = 38.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_56y4f"]
+radius = 22.0
+height = 184.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mqoxr"]
+radius = 17.0
+height = 44.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_at3eu"]
+radius = 12.0
+height = 44.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yriy7"]
 atlas = ExtResource("2_wl5hl")
@@ -352,7 +361,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"attacking",
-"speed": 10.0
+"speed": 7.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -440,7 +449,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_laue0"]
-height = 36.0
+radius = 11.0
+height = 44.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hi3tw"]
 atlas = ExtResource("3_0w7fe")
@@ -868,18 +878,41 @@ script = ExtResource("2_i8ma0")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies_pool1/womanGhost/CharacterBody2D"]
 position = Vector2(-1, -33)
 sprite_frames = SubResource("SpriteFrames_k0tky")
-animation = &"dying"
+animation = &"attacking"
+frame_progress = 0.908244
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies_pool1/womanGhost/CharacterBody2D"]
-position = Vector2(-1, -18)
+visible = false
+position = Vector2(0, -21)
 shape = SubResource("CapsuleShape2D_77025")
 
-[node name="Hitbox" type="Area2D" parent="Enemies_pool1/womanGhost/CharacterBody2D"]
+[node name="ChaseArea" type="Area2D" parent="Enemies_pool1/womanGhost/CharacterBody2D"]
+visible = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies_pool1/womanGhost/CharacterBody2D/Hitbox"]
-position = Vector2(-1, -20)
-shape = SubResource("CapsuleShape2D_i8ma0")
-debug_color = Color(0.919557, 0.219287, 0.456305, 0.42)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies_pool1/womanGhost/CharacterBody2D/ChaseArea"]
+position = Vector2(1, -22)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_56y4f")
+debug_color = Color(0.667801, 0.510513, 0, 0.42)
+
+[node name="AttackingArea" type="Area2D" parent="Enemies_pool1/womanGhost/CharacterBody2D"]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies_pool1/womanGhost/CharacterBody2D/AttackingArea"]
+position = Vector2(0, -22)
+shape = SubResource("CapsuleShape2D_mqoxr")
+debug_color = Color(0.67254, 0.00129741, 0.808892, 0.42)
+
+[node name="DamageArea" type="Area2D" parent="Enemies_pool1/womanGhost/CharacterBody2D"]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies_pool1/womanGhost/CharacterBody2D/DamageArea"]
+position = Vector2(0, -21)
+shape = SubResource("CapsuleShape2D_at3eu")
+debug_color = Color(0.999014, 0.94148, 0.935113, 0.42)
+
+[node name="AttackTimer" type="Timer" parent="Enemies_pool1/womanGhost/CharacterBody2D"]
+one_shot = true
 
 [node name="maleDemon" type="Node2D" parent="Enemies_pool1"]
 visible = false
@@ -891,11 +924,36 @@ script = ExtResource("2_i8ma0")
 position = Vector2(0, -32)
 sprite_frames = SubResource("SpriteFrames_c1bxv")
 animation = &"attacking"
-frame_progress = 0.550079
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies_pool1/maleDemon/CharacterBody2D"]
-position = Vector2(0, -18)
+position = Vector2(0, -22)
 shape = SubResource("CapsuleShape2D_laue0")
+
+[node name="ChaseArea" type="Area2D" parent="Enemies_pool1/maleDemon/CharacterBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies_pool1/maleDemon/CharacterBody2D/ChaseArea"]
+position = Vector2(1, -22)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_56y4f")
+debug_color = Color(0.667801, 0.510513, 0, 0.42)
+
+[node name="AttackingArea" type="Area2D" parent="Enemies_pool1/maleDemon/CharacterBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies_pool1/maleDemon/CharacterBody2D/AttackingArea"]
+position = Vector2(0, -22)
+shape = SubResource("CapsuleShape2D_mqoxr")
+debug_color = Color(0.67254, 0.00129741, 0.808892, 0.42)
+
+[node name="DamageArea" type="Area2D" parent="Enemies_pool1/maleDemon/CharacterBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies_pool1/maleDemon/CharacterBody2D/DamageArea"]
+position = Vector2(0, -21)
+shape = SubResource("CapsuleShape2D_at3eu")
+debug_color = Color(0.999014, 0.94148, 0.935113, 0.42)
+
+[node name="AttackTimer" type="Timer" parent="Enemies_pool1/maleDemon/CharacterBody2D"]
+wait_time = 0.834
+one_shot = true
 
 [node name="redSlime" type="Node2D" parent="Enemies_pool1"]
 visible = false
@@ -933,4 +991,15 @@ frame_progress = 0.0987033
 position = Vector2(-1, -13)
 shape = SubResource("CapsuleShape2D_l41ky")
 
-[connection signal="body_entered" from="Enemies_pool1/womanGhost/CharacterBody2D/Hitbox" to="Enemies_pool1/womanGhost/CharacterBody2D" method="_on_hitbox_body_entered"]
+[connection signal="body_entered" from="Enemies_pool1/womanGhost/CharacterBody2D/ChaseArea" to="Enemies_pool1/womanGhost/CharacterBody2D" method="_on_chase_area_body_entered"]
+[connection signal="body_exited" from="Enemies_pool1/womanGhost/CharacterBody2D/ChaseArea" to="Enemies_pool1/womanGhost/CharacterBody2D" method="_on_chase_area_body_exited"]
+[connection signal="body_entered" from="Enemies_pool1/womanGhost/CharacterBody2D/AttackingArea" to="Enemies_pool1/womanGhost/CharacterBody2D" method="_on_attacking_area_body_entered"]
+[connection signal="body_exited" from="Enemies_pool1/womanGhost/CharacterBody2D/AttackingArea" to="Enemies_pool1/womanGhost/CharacterBody2D" method="_on_attacking_area_body_exited"]
+[connection signal="body_entered" from="Enemies_pool1/womanGhost/CharacterBody2D/DamageArea" to="Enemies_pool1/womanGhost/CharacterBody2D" method="_on_damage_area_body_entered"]
+[connection signal="timeout" from="Enemies_pool1/womanGhost/CharacterBody2D/AttackTimer" to="Enemies_pool1/womanGhost/CharacterBody2D" method="_on_attack_timer_timeout"]
+[connection signal="body_entered" from="Enemies_pool1/maleDemon/CharacterBody2D/ChaseArea" to="Enemies_pool1/maleDemon/CharacterBody2D" method="_on_chase_area_body_entered"]
+[connection signal="body_exited" from="Enemies_pool1/maleDemon/CharacterBody2D/ChaseArea" to="Enemies_pool1/maleDemon/CharacterBody2D" method="_on_chase_area_body_exited"]
+[connection signal="body_entered" from="Enemies_pool1/maleDemon/CharacterBody2D/AttackingArea" to="Enemies_pool1/maleDemon/CharacterBody2D" method="_on_attacking_area_body_entered"]
+[connection signal="body_exited" from="Enemies_pool1/maleDemon/CharacterBody2D/AttackingArea" to="Enemies_pool1/maleDemon/CharacterBody2D" method="_on_attacking_area_body_exited"]
+[connection signal="body_entered" from="Enemies_pool1/maleDemon/CharacterBody2D/DamageArea" to="Enemies_pool1/maleDemon/CharacterBody2D" method="_on_damage_area_body_entered"]
+[connection signal="timeout" from="Enemies_pool1/maleDemon/CharacterBody2D/AttackTimer" to="Enemies_pool1/maleDemon/CharacterBody2D" method="_on_attack_timer_timeout"]

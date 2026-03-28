@@ -92,7 +92,7 @@ func become_invincible():
 	is_invincible = true
 	
 	animated_sprite.modulate.a = 0.5
-	await get_tree().create_timer(1.5).timeout
+	await get_tree().create_timer(1).timeout
 	animated_sprite.modulate.a = 1.0
 	is_invincible = false
 	

@@ -11,8 +11,8 @@ config_version=5
 [application]
 
 config/name="My first game"
-run/main_scene="uid://cx23pv2onjvsg"
-config/features=PackedStringArray("4.4", "Forward Plus")
+run/main_scene="res://Scenes/game.tscn"
+config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://Assets/icon.svg"
 
 [global_group]

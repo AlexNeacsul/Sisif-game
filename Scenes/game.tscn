@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://ca8kuv4lowufm" path="res://Scenes/Enemies.tscn" id="2_3dryh"]
 [ext_resource type="PackedScene" uid="uid://dnkjlnbcvw7ri" path="res://Scenes/spawn_point.tscn" id="3_wowpa"]
 [ext_resource type="PackedScene" uid="uid://bexittqohif2a" path="res://Scenes/rigid boulder.tscn" id="3_wrm1d"]
-[ext_resource type="Script" uid="uid://ciwwocicyi1a7" path="res://Scripts/progress_bar.gd" id="6_i6g32"]
+[ext_resource type="Script" path="res://Scripts/progress_bar.gd" id="6_i6g32"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ebmjs"]
 distance = -70.0
@@ -52,7 +52,6 @@ layer = 13
 script = ExtResource("6_i6g32")
 
 [node name="ProgressBar" type="ProgressBar" parent="UI"]
-anchors_preset = -1
 offset_left = -11.0
 offset_top = -12.0
 offset_right = 100.0

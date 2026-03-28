@@ -1,7 +1,7 @@
 [gd_scene load_steps=32 format=3 uid="uid://x23yarpoegih"]
 
 [ext_resource type="Texture2D" uid="uid://bp58ncaiyl6h4" path="res://Assets/Sprites/Male Skin3.PNG" id="1_secfd"]
-[ext_resource type="Script" uid="uid://deqt8hybyik1e" path="res://Scripts/sisif.gd" id="1_xcyfn"]
+[ext_resource type="Script" path="res://Scripts/sisif.gd" id="1_xcyfn"]
 [ext_resource type="Texture2D" uid="uid://dcgikut8ckgs4" path="res://Assets/Sprites/Male Skin3_var2.PNG" id="3_fu2xt"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xcyfn"]
@@ -220,7 +220,7 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_secfd"]
-radius = 9.0
+radius = 11.0
 height = 46.0
 
 [node name="Sisif" type="CharacterBody2D"]
@@ -231,8 +231,7 @@ metadata/Health = 0
 [node name="SisifSprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(-1, -32)
 sprite_frames = SubResource("SpriteFrames_8rw3v")
-animation = &"attacking"
-frame_progress = 0.981717
+animation = &"Idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, -22)
