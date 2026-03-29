@@ -8,6 +8,9 @@ extends CharacterBody2D
 @export var damage: int = 10
 @export var attack_damage: int = 20
 @export var attack_cooldown: float = 1.0
+@export var is_ranged: bool = false
+@export var projectile_scene: PackedScene
+@export var projectile_time:float = 0.8
 
 @onready var animatedSprite = $AnimatedSprite2D
 @onready var attack_timer = $AttackTimer
@@ -26,7 +29,6 @@ func _ready() -> void:
 	direction = [1, -1].pick_random()
 	current_time = idle_time
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
@@ -34,29 +36,26 @@ func _physics_process(delta: float) -> void:
 	
 	if is_attacking:
 		velocity.x = 0
-		play_animation_helper("attacking")
+		if is_ranged:
+			play_animation_helper("shoot")
+		else:
+			play_animation_helper("attacking")
+
 	elif not can_attack and player_in_attack_range:
 		velocity.x = 0
-		play_animation_helper("idle")
-		
+		play_animation_helper("idle")		
 		if target_player:
 			var dir_to_player = sign(target_player.global_position.x - global_position.x)
-			if dir_to_player < 0:
-				animatedSprite.flip_h = false
-			else:
-				animatedSprite.flip_h = true
+			animatedSprite.flip_h = (dir_to_player > 0)
+			
 	elif is_chasing and target_player:
 		var dir_to_player = sign(target_player.global_position.x - global_position.x)
 		velocity.x = dir_to_player * chase_speed
 		play_animation_helper("run")
+		animatedSprite.flip_h = (dir_to_player > 0)
 		
-		if dir_to_player < 0:
-			animatedSprite.flip_h = false
-		else:
-			animatedSprite.flip_h = true
 	else:
 		current_time -= delta
-		
 		if current_time <= 0:
 			change_state()
 			
@@ -64,13 +63,9 @@ func _physics_process(delta: float) -> void:
 			velocity.x = 0
 			play_animation_helper("idle")
 		else:
-			velocity.x += direction * speed * delta
+			velocity.x = direction * speed
 			play_animation_helper("run")
-			
-			if direction < 0:
-				animatedSprite.flip_h = false
-			else:
-				animatedSprite.flip_h = true
+			animatedSprite.flip_h = (direction > 0)
 				
 			if is_on_wall():
 				change_state()
@@ -92,7 +87,6 @@ func play_animation_helper(animName) -> void:
 	else:
 		pass
 
-
 func _on_chase_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		is_chasing = true
@@ -106,6 +100,7 @@ func _on_chase_area_body_exited(body: Node2D) -> void:
 func _on_attacking_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		player_in_attack_range = true
+		target_player = body
 		start_attack()
 
 func _on_attacking_area_body_exited(body: Node2D) -> void:
@@ -117,7 +112,7 @@ func _on_damage_area_body_entered(body: Node2D) -> void:
 		body.take_damage(damage)
 		
 func start_attack() -> void:
-	if is_attacking or not player_in_attack_range:
+	if is_attacking or not player_in_attack_range or not can_attack:
 		return
 	
 	is_attacking = true
@@ -126,13 +121,37 @@ func start_attack() -> void:
 
 func _on_attack_timer_timeout() -> void:
 	if player_in_attack_range and target_player:
-		target_player.take_damage(attack_damage)
+		if is_ranged and projectile_scene != null:
+			shoot_projectile()
+		else:
+			target_player.take_damage(attack_damage)
 	
 	is_attacking = false
+	start_cooldown()
 	
-	if get_tree() == null:
-		return
+func start_cooldown() -> void:
+	if get_tree() == null: return
+	
 	await get_tree().create_timer(attack_cooldown).timeout
+	can_attack = true
 	
-	if player_in_attack_range:
-		start_attack()
+	if player_in_attack_range: start_attack()
+
+func shoot_projectile() -> void:
+	if target_player == null: return
+		
+	var projectile =  projectile_scene.instantiate()
+	#projectile.ball_destroyed.connect(_on_projectile_disappeared)
+	get_tree().current_scene.call_deferred("add_child", projectile)
+	projectile.global_position = global_position + Vector2(0, -20)
+	
+	var displacement = target_player.global_position - projectile.global_position
+	var time = projectile_time
+	var vel_x = displacement.x / time
+	var vel_y = (displacement.y - 0.5 * gravity * time * time) / time
+	
+	projectile.velocity = Vector2(vel_x, vel_y)
+	projectile.damage = attack_damage
+
+func _on_projectile_disappeared() -> void:
+	start_cooldown()
