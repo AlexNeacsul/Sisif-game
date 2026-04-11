@@ -1,16 +1,25 @@
 extends CharacterBody2D
 
+@export_group("Basic Settings")
 @export var speed: float = 50.0
 @export var chase_speed: float = 75.0
 @export var gravity: float = 980.0
 @export var walk_time: float = 2.0
 @export var idle_time: float = 1.5
+@export_group("")
+
+@export_group("Attacking Settings")
 @export var damage: int = 10
 @export var attack_damage: int = 20
 @export var attack_cooldown: float = 1.0
-@export var is_ranged: bool = false
+@export_enum("Mele", "Range", "Mixed") var attacking_type: String
+@export_group("")
+
+@export_group("Ranged Settings")
 @export var projectile_scene: PackedScene
 @export var projectile_time:float = 0.8
+@export_enum("Parabolic", "Straight") var projectile_trajectory: int
+@export_group("")
 
 @onready var animatedSprite = $AnimatedSprite2D
 @onready var attack_timer = $AttackTimer
@@ -36,7 +45,7 @@ func _physics_process(delta: float) -> void:
 	
 	if is_attacking:
 		velocity.x = 0
-		if is_ranged:
+		if attacking_type == "Range":
 			play_animation_helper("shoot")
 		else:
 			play_animation_helper("attacking")
@@ -121,7 +130,7 @@ func start_attack() -> void:
 
 func _on_attack_timer_timeout() -> void:
 	if player_in_attack_range and target_player:
-		if is_ranged and projectile_scene != null:
+		if attacking_type == "Range" and projectile_scene != null:
 			shoot_projectile()
 		else:
 			target_player.take_damage(attack_damage)

@@ -916,6 +916,7 @@ visible = false
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="Enemies_pool1/womanGhost"]
 script = ExtResource("2_i8ma0")
+attacking_type = "Mele"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies_pool1/womanGhost/CharacterBody2D"]
 position = Vector2(-1, -33)
@@ -957,6 +958,8 @@ visible = false
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="Enemies_pool1/maleDemon"]
 script = ExtResource("2_i8ma0")
+attacking_type = "Mele"
+projectile_trajectory = 1
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies_pool1/maleDemon/CharacterBody2D"]
 position = Vector2(0, -32)
@@ -998,8 +1001,8 @@ one_shot = true
 [node name="CharacterBody2D" type="CharacterBody2D" parent="Enemies_pool1/redSlime" groups=["Enemy"]]
 script = ExtResource("2_i8ma0")
 speed = 1.0
-attack_cooldown = 1100.0
-is_ranged = true
+attack_cooldown = 2.0
+attacking_type = "Range"
 projectile_scene = ExtResource("5_x1g36")
 projectile_time = 1.0
 
