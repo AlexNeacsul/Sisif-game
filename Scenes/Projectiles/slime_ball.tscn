@@ -1,26 +1,26 @@
 [gd_scene load_steps=10 format=3 uid="uid://wsu0f3oxc582"]
 
-[ext_resource type="Script" path="res://Scripts/slime_ball.gd" id="1_dewhw"]
-[ext_resource type="Texture2D" uid="uid://dgqmol5rt5apn" path="res://Assets/Sprites/slime_ball.png" id="2_pbk0r"]
+[ext_resource type="Script" path="res://Scripts/Projectiles/slime_ball.gd" id="1_8mwkg"]
+[ext_resource type="Texture2D" uid="uid://dgqmol5rt5apn" path="res://Assets/Sprites/slime_ball.png" id="2_pgirb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v5che"]
-atlas = ExtResource("2_pbk0r")
+atlas = ExtResource("2_pgirb")
 region = Rect2(192, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n08q8"]
-atlas = ExtResource("2_pbk0r")
+atlas = ExtResource("2_pgirb")
 region = Rect2(192, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vptsm"]
-atlas = ExtResource("2_pbk0r")
+atlas = ExtResource("2_pgirb")
 region = Rect2(224, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_astij"]
-atlas = ExtResource("2_pbk0r")
+atlas = ExtResource("2_pgirb")
 region = Rect2(224, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tnfo1"]
-atlas = ExtResource("2_pbk0r")
+atlas = ExtResource("2_pgirb")
 region = Rect2(192, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_1ed40"]
@@ -55,7 +55,7 @@ animations = [{
 
 [node name="SlimeBall" type="Area2D"]
 z_index = 5
-script = ExtResource("1_dewhw")
+script = ExtResource("1_8mwkg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_1ed40")

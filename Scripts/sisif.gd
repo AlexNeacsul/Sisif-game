@@ -16,6 +16,7 @@ var carrying_boulder = false
 func _ready() -> void:
 	current_health = max_health
 	add_to_group("Player")
+	OS.get_static_memory_usage()
 
 func get_carrying_boulder() -> bool:
 	return carrying_boulder

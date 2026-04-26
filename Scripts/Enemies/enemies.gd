@@ -1,11 +1,15 @@
 extends Node2D
-@onready var enemies_pool1 = $Enemies_pool1
+
+@onready var pools:Dictionary = {
+	"miniBoss": $MiniBoss_pool1,
+	"genericEnemy": $Enemies_pool1
+	}
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	enemies_pool1.visible = false
-	enemies_pool1.process_mode = Node.PROCESS_MODE_DISABLED
-	
+	for pool in pools.values():
+		pool.visible = false
+		pool.process_mode = Node.PROCESS_MODE_DISABLED
 	spawn_enemies_by_zone()
 
 func spawn_enemies_by_zone():
@@ -22,10 +26,9 @@ func spawn_enemies_at_markers(point_node, id):
 	
 	match id:
 		1:
-			source_pool = enemies_pool1
+			source_pool = pools[point_node.enemyType]
 		_:
-			source_pool = enemies_pool1
-	
+			source_pool = pools[point_node.enemyType]
 	
 	var templates = source_pool.get_children()
 	

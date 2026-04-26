@@ -21,8 +21,8 @@ extends CharacterBody2D
 @export_enum("Parabolic", "Straight") var projectile_trajectory: int
 @export_group("")
 
-@onready var animatedSprite = $AnimatedSprite2D
-@onready var attack_timer = $AttackTimer
+@onready var animatedSprite:AnimatedSprite2D = $AnimatedSprite2D
+@onready var attack_timer:Timer = $AttackTimer
 
 var direction: int = 1
 var is_idling: bool = true
@@ -40,8 +40,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
-	if not is_on_floor():
-		velocity.y += gravity * delta
+	if not is_on_floor(): velocity.y += gravity * delta
 	
 	if is_attacking:
 		velocity.x = 0

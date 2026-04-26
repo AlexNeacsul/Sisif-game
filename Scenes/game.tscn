@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://cx23pv2onjvsg"]
+[gd_scene load_steps=11 format=3 uid="uid://cx23pv2onjvsg"]
 
 [ext_resource type="PackedScene" uid="uid://x23yarpoegih" path="res://Scenes/sisif.tscn" id="1_ebmjs"]
 [ext_resource type="PackedScene" uid="uid://cqbf25fk5degr" path="res://Scenes/Map.tscn" id="1_wrm1d"]
-[ext_resource type="PackedScene" uid="uid://ca8kuv4lowufm" path="res://Scenes/Enemies.tscn" id="2_3dryh"]
-[ext_resource type="PackedScene" uid="uid://dnkjlnbcvw7ri" path="res://Scenes/spawn_point.tscn" id="3_wowpa"]
+[ext_resource type="PackedScene" uid="uid://ca8kuv4lowufm" path="res://Scenes/Enemies/Enemies.tscn" id="2_3dryh"]
+[ext_resource type="PackedScene" uid="uid://dnkjlnbcvw7ri" path="res://Scenes/Enemies/spawn_point.tscn" id="3_wowpa"]
 [ext_resource type="PackedScene" uid="uid://bexittqohif2a" path="res://Scenes/rigid boulder.tscn" id="3_wrm1d"]
+[ext_resource type="Script" path="res://Scripts/Enemies/spawn_point.gd" id="4_gnpj2"]
 [ext_resource type="Script" path="res://Scripts/progress_bar.gd" id="6_i6g32"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ebmjs"]
@@ -26,9 +27,13 @@ position = Vector2(-51, -15)
 
 [node name="spawnPoint" parent="Map/Enemies" instance=ExtResource("3_wowpa")]
 position = Vector2(-66, -62)
+script = ExtResource("4_gnpj2")
+enemyType = "genericEnemy"
 
 [node name="spawnPoint2" parent="Map/Enemies" instance=ExtResource("3_wowpa")]
 position = Vector2(215, -64)
+script = ExtResource("4_gnpj2")
+enemyType = "miniBoss"
 
 [node name="Sisif" parent="." instance=ExtResource("1_ebmjs")]
 unique_name_in_owner = true
