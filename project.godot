@@ -15,6 +15,16 @@ run/main_scene="res://Scenes/game.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://Assets/icon.svg"
 
+[file_customization]
+
+folder_colors={
+"res://Scenes/Enemies/": "red",
+"res://Scenes/Minions/": "purple",
+"res://Scenes/Projectiles/": "pink",
+"res://Scripts/Enemies/": "red",
+"res://Scripts/Projectiles/": "pink"
+}
+
 [global_group]
 
 Pushable="Nodes that can be pushed"

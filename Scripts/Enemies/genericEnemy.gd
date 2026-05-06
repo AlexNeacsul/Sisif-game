@@ -17,7 +17,6 @@ extends CharacterBody2D
 
 @export_group("Ranged Settings")
 @export var projectile_scene: PackedScene
-@export var projectile_time:float = 0.8
 @export_enum("Parabolic", "Straight") var projectile_trajectory: int
 @export_group("")
 
@@ -149,17 +148,12 @@ func shoot_projectile() -> void:
 	if target_player == null: return
 		
 	var projectile =  projectile_scene.instantiate()
-	#projectile.ball_destroyed.connect(_on_projectile_disappeared)
+	
 	get_tree().current_scene.call_deferred("add_child", projectile)
-	projectile.global_position = global_position + Vector2(0, -20)
 	
-	var displacement = target_player.global_position - projectile.global_position
-	var time = projectile_time
-	var vel_x = displacement.x / time
-	var vel_y = (displacement.y - 0.5 * gravity * time * time) / time
+	projectile.setup_trajectory(global_position + Vector2(0, -20), 
+								target_player.global_position, attack_damage)
 	
-	projectile.velocity = Vector2(vel_x, vel_y)
-	projectile.damage = attack_damage
 
 func _on_projectile_disappeared() -> void:
 	start_cooldown()
